@@ -2,16 +2,24 @@ pipeline {
     agent {
         label 'AGENT-1'
     }
+    environment {
+         appVersion = ''
+    }
     options {
         // Timeout counter starts AFTER agent is allocated
-        timeout(time: 20, unit: 'SECONDS')
+        timeout(time: 15, unit: 'MINUTES')
         disableConcurrentBuilds()
     }
     stages {
-        stage('Example') {
+        stage('Read package.json') {
             steps {
-                echo 'Hello World'
-                sh 'sleep 200'
+                script {
+
+                    def packageJSON = readJSON file: 'package.json'
+                    appVersion = packageJSON.version
+                    echo "Package version: ${appVersion}"
+
+                }
             }
         }
     }
