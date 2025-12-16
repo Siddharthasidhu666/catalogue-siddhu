@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'my-defined-label'
+        label 'AGENT-1'
     }
     options {
         // Timeout counter starts AFTER agent is allocated
